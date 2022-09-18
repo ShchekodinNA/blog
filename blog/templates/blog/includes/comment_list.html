@@ -1,0 +1,17 @@
+{% if comments %}
+<h2>Comments to this post</h2>
+<section id="comments">
+
+    <ul>
+        {% for comment in comments %}
+            <li id="indcomment">
+                <h4>by {{comment.email}} ({{comment.date|date:'d.m.Y'}})</h4>
+                <p>{{comment.comment_text}}</p>
+            </li>
+        {% endfor %}
+    </ul>
+
+</section>
+{% else %}
+<h1>No one left any comment here yet. Be first!</h1>
+{% endif %}

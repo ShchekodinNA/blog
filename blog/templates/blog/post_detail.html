@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'blog/post-detail.css' %}"></link>
+
+{% endblock  %}
+
+{% block page_title %}{{post.title}}{% endblock %}
+
+{% block page_body %}
+    <section id="summary">
+        <h2>{{post.title}}</h2>
+        <div>
+            {% for tag in post_tags %}
+                <span>{{tag.caption}}</span>
+            {% endfor %}
+        </div>
+        <article>
+            <img src="{{ post.img.url }}" alt="{{post.name}}"></img>
+            <address>By <a href="mailto:{{post.author.email}}">{{post.author}}</a></address>
+            <div>
+                Last updated on <time>{{post.date|date:'d.m.Y'}}</time><br>
+                <form id ="favorites" action="{% url 'fav-control' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="post_slug" value="{{post.slug}}"></input>
+                    <input type="hidden" name="is_favorite_post" value="{{is_favorite}}"></input>
+                    <button>
+                        {% if is_favorite %}
+                            remove from
+                        {% else %}
+                            add to
+                        {% endif %}
+                        favorites 
+                    </button>
+                </form>
+            </div>
+        </article>
+    </section>
+    <main> 
+        <p>
+            {{post.content|linebreaks}}
+        </p>
+    </main>
+    <section id="comments">
+        {% include 'blog/includes/add_comment.html' with form=form %}
+        {% include 'blog/includes/comment_list.html' with comments=comments %}
+    </section>
+{% endblock %}

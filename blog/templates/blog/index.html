@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'blog/index.css' %}"></link>
+    <link rel="stylesheet" href="{% static 'blog/includes/post.css' %}"></link>
+{% endblock  %}
+
+{% block page_title %}Nikita's Blog{% endblock %}
+
+{% block page_body %}
+    <section id="welcome">
+        <header>
+            <img src="{% static 'blog/images/NikitaSH.jpg'%}" alt="Nikita - head of that pile of posts"></img>
+            <h2>NIKITA'S POSTS</h2>
+        </header>
+    </section>
+
+    <section id="latest-posts">
+        <h2>Latest posts:</h2>
+        <ul>
+            {% for post in latest_posts %}
+                {% include 'blog/includes/post.html' with post=post %}
+            {% endfor %}
+        </ul>
+    </section>
+    <section id="about">
+        <h2>Contacts</h2>
+        <p>some staff</p>
+    </section>
+{% endblock  %}
